@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'link_block/icon.html' %}
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static "css/home.css" %}">
+    {% include 'link_block/links.html' %}
+    {% block header %}
+    {% endblock %}
+</head>
+
+<body>
+    <div class="top-menu">
+        <nav>
+            <div class="mid-box">
+                <div class="nav-logo">
+                    <a>
+                        <div>
+                            <b>INS</b>
+                            <b>|</b>
+                            <b>instagram</b>
+                        </div>
+                    </a>
+                </div>
+                <div class="search-box">
+                    <div class="input-box">
+                        <i class="glyphicon glyphicon-search search-icon"></i>
+                        <input id="sI" type="text" autocapitalize="none" placeholder="搜索"/>
+                        <i id="removeText" class="glyphicon glyphicon-remove-circle remove-text"></i>
+                    </div>
+                </div>
+                <div class="option-box">
+                    <div class="option-inner-box">
+                        <div class="explore-box"><a><i class="glyphicon glyphicon-time"></i></a></div>
+                        <div class="favorite-box"><a><i class="glyphicon glyphicon-heart"></i></a></div>
+                        <div class="person-option"><a><i class="glyphicon glyphicon-user"></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="main">
+        {% block main_list %}
+
+        {% endblock %}
+    </div>
+    <div class="footer-links">
+
+    </div>
+</body>
+<script type="text/javascript" src="{% static "js/home.js" %}"></script>
+</html>

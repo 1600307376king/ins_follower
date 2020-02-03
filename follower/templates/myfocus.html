@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/myfocus.css' %}">
+{% endblock %}
+{% block main_list %}
+    <div class="focus-news-list">
+        <div class="focus-news">
+            <div class="focus-news-title">
+                <img src="{% static '/images/avatar/girl.jpg' %}" alt="">
+
+                <div class="title-name">nike</div>
+                <div class="title-option">...</div>
+            </div>
+            <div class="focus-news-images">
+                <img src="{% static 'images/user/jjc/7fd8564f457817f4b47a329b1fe44624.jpg' %}" alt="">
+            </div>
+            <div class="focus-news-options">
+                <div class="fav">
+                    <i class="glyphicon glyphicon-heart-empty"></i>
+                </div>
+                <div class="send-msg">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                </div>
+                <div class="post-news">
+                    <i class="glyphicon glyphicon-share"></i>
+                </div>
+                <div class="collect">
+                    <i class="glyphicon glyphicon-star-empty"></i>
+                </div>
+                <i></i>
+                <i></i>
+            </div>
+            <div class="focus-like-count">
+                <div>13413赞</div>
+            </div>
+            <div class="focus-news-comment-describe">
+                <div class="comment-users">
+                    nike Mamba forever ... <span>更多</span>
+                </div>
+                <div class="comment-count">
+                    <a>全部 700 评论</a>
+                </div>
+            </div>
+            <div class="focus-news-comment-list">
+                <div class="news-comment">asfasdad</div>
+            </div>
+            <div class="focus-news-release-time">
+                1天前
+            </div>
+            <div class="add-comment">
+                <textarea id="addContent" placeholder="添加评论..." maxlength="1000" onchange="lineFeed()"></textarea>
+                <button class="add-comment-button">发布</button>
+            </div>
+        </div>
+        <div class="recommend-slide-box">
+            <div class="slide-box-title">
+                <span>推荐用户</span>
+                <a>查看全部</a>
+            </div>
+            <div class="slide-list">
+                <div id="btCarousel" class="carousel-slide">
+                    <div id="carouselInner" class="carousel-inner">
+                        <div class="item active" >
+                            <div class="user-box">
+                                <img src="{% static "/images/avatar/girl.jpg" %}" alt="">
+                                <div class="user-box-nickname">
+                                    jjc
+                                </div>
+                                <div class="user-box-info">
+                                    ins推荐
+                                </div>
+                                <div class="official-info">
+                                    官方账户
+                                </div>
+                                <div class="user-box-btn">
+                                    <button >关注</button>
+                                </div>
+
+                            </div>
+                            <div class="user-box">
+                                <img src="{% static "/images/avatar/girl.jpg" %}" alt="">
+                                <div class="user-box-nickname">
+                                    jjc
+                                </div>
+                                <div class="user-box-info">
+                                    ins推荐
+                                </div>
+                                <div class="official-info">
+                                    官方账户
+                                </div>
+                                <div class="user-box-btn">
+                                    <button >关注</button>
+                                </div>
+                            </div>
+                            <div class="user-box">
+                                <img src="{% static "/images/avatar/girl.jpg" %}" alt="">
+                                <div class="user-box-nickname">
+                                    jjc
+                                </div>
+                                <div class="user-box-info">
+                                    ins推荐
+                                </div>
+                                <div class="official-info">
+                                    官方账户
+                                </div>
+                                <div class="user-box-btn">
+                                    <button >关注</button>
+                                </div>
+                            </div>
+                            <div class="user-box">
+                                <img src="{% static "/images/avatar/girl.jpg" %}" alt="">
+                                <div class="user-box-nickname">
+                                    jjc
+                                </div>
+
+                                <div class="user-box-info">
+                                    ins推荐
+                                </div>
+                                <div class="official-info">
+                                    关注
+                                </div>
+                                <div class="user-box-btn">
+                                    <button >关注</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pre-btn">
+                    <i id="lR" class="glyphicon glyphicon-circle-arrow-left" onclick="left_roll()"></i>
+                </div>
+                <div id="rR" class="next-btn">
+                    <i id="rR" class="glyphicon glyphicon-circle-arrow-right" onclick="right_roll()"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--textarea限制字数-->
+    <script type="text/javascript">
+        let n = 2;
+        let MaxLineLength = 71;
+        function addListenTextArea() {
+            let text = document.getElementById("addContent");
+            text.addEventListener("input", lineFeed, false);
+        }
+
+        function lineFeed() {
+
+            let le = document.getElementById("addContent").value.length;
+            if(le > 9 && (le + 1) % MaxLineLength === 0){
+                console.log(le);
+                document.getElementById("addContent").value += "\n";
+                document.getElementById("addContent").style.height = (n * 18).toString() + "px";
+                document.getElementById("addContent").style.marginTop = "10px";
+                n += 1;
+            }
+            if(n > 4){
+                document.getElementById("addContent").style.overflowY = "scroll";
+            }
+        }
+        
+        addListenTextArea();
+    </script>
+    <script type="text/javascript">
+        let ClickNum = {'cli': {{recommend_total}}};
+        console.log(ClickNum);
+        function left_roll() {
+
+            ClickNum.cli += 1;
+            document.getElementById("btCarousel").style.marginLeft = (ClickNum.cli * -200).toString() + "px";
+        }
+        
+        function right_roll() {
+            if(ClickNum.cli >= 2){
+                document.getElementById("rR").style.display = "none";
+            }
+            else {
+                document.getElementById("rR").style.display = "inline";
+            }
+            ClickNum.cli -= 1;
+            document.getElementById("btCarousel").style.marginLeft = (ClickNum.cli * 200).toString() + "px";
+        }
+    </script>
+{% endblock %}

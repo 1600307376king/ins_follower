@@ -1,0 +1,235 @@
+body {
+    /*top: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background: #FAFAFA;
+}
+
+.top-menu  {
+    border-bottom: 1px solid #DBDBDB;
+    background: white;
+}
+
+nav {
+    width: 100%;
+    height: 80px;
+
+}
+
+.mid-box {
+    width: 100%;
+    max-width: 1000px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.nav-logo {
+    width: 400px;
+    height: 80px;
+    line-height: 80px;
+    display: block;
+    float: left;
+}
+
+.search-box {
+    width: 220px;
+    height: 80px;
+    line-height: 80px;
+    float: left;
+    position: relative;
+}
+
+
+
+.input-box {
+    width: 220px;
+    height: 34px;
+    position: absolute;
+    top: 23px;
+    border: 1px solid #DBDBDB;
+    border-radius: 3px;
+    background: #FAFAFA;
+}
+
+.input-box input {
+    width: 180px;
+    height: 32px;
+    border-radius: 2px;
+    border: 0;
+    position: absolute;
+    top: 0;
+    transform: translate(-50%);
+    left: 50%;
+    right: 50%;
+    background: #FAFAFA;
+    outline: none;
+    padding-left: 5px;
+}
+
+.input-box input::-webkit-input-placeholder {
+    color: #DBDBDB;
+}
+
+.input-box input::-webkit-input-placeholder{
+    text-align: center;
+}
+
+.input-box i {
+    position: absolute;
+    height: 32px;
+    line-height: 32px;
+    color: #DBDBDB;
+    font-size: 12px;
+}
+
+.search-icon {
+    left: 5px;
+}
+
+.remove-text {
+    right: 5px;
+    display: none;
+}
+
+.option-box {
+    width: auto;
+    height: 100%;
+    min-width: 100px;
+    float: right;
+}
+
+.option-inner-box {
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    margin: 0 auto;
+}
+
+.explore-box {
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.favorite-box {
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.person-option {
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.option-inner-box i {
+    color: #262626;
+    font-size: 22px;
+}
+
+.main {
+    position: fixed;
+    top: 80px;
+    /*height: 100%;*/
+    width: 100%;
+    overflow-y: scroll;
+    background: #FAFAFA;
+    bottom: 60px;
+    margin-bottom: 20px;
+    z-index: 0;
+}
+
+.middle-list {
+    width: 100%;
+    height: auto;
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+}
+
+.top-title {
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    background: #FAFAFA;
+}
+
+.users-box {
+    width: 100%;
+    height: auto;
+}
+
+.user {
+    padding: 10px;
+
+    height: 85px;
+}
+
+.user-avatar {
+    display: block;
+    float: left;
+    margin: 10px 10px 10px 5px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #9D9D9D;
+}
+
+.user-avatar img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid #DBDBDB;
+}
+
+.user-text {
+    display: block;
+    float: left;
+}
+
+.user-text-nickname {
+    font-weight: bold;
+}
+
+.user-signature {
+    color: #C5C5C5;
+}
+
+.official-description {
+    color: #C5C5C5;
+}
+
+.follower-button {
+    display: block;
+    float: right;
+    margin-top: 10px;
+
+}
+
+.fo {
+    border: none;
+    background: dodgerblue;
+    border-radius: 3px;
+    color: white;
+    padding: 5px 10px 5px 10px;
+}
+
+.footer-links {
+    width: 100%;
+    height: 60px;
+    background: #404040;
+    position: fixed;
+    bottom: 0;
+
+}
+
+
+

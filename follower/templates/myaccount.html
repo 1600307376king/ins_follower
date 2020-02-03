@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+    <style>
+        .my-account {
+            width: 971px;
+            height: 687px;
+            margin: 30px auto;
+            border: 1px solid #FAFAFA;
+        }
+
+        .my-account-header {
+            border-bottom: 1px solid #EFEFEF;
+            width: 100%;
+            height: 200px;
+        }
+
+        .my-account-avatar {
+            float: left;
+        }
+
+        .my-account-avatar img {
+            width: 150px;
+            height: 150px;
+            margin: 0 50px;
+            border-radius: 50%;
+
+        }
+
+        .my-account-msg {
+            float: left;
+            height: 200px;
+        }
+
+        .account-setting {
+            width: 100%;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .account-setting span {
+            margin-right: 20px;
+        }
+
+        .account-nickname {
+            font-size: 24px;
+        }
+
+        .account-setting i {
+            padding-top: 10px;
+            font-size: 24px;
+
+        }
+
+        .account-edit {
+            font-size: 14px;
+            border: 1px solid #DBDBDB;
+            padding: 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .my-account-nav {
+            width: 100%;
+            height: 50px;
+            position: relative;
+            margin-top: 20px;
+            float: left;
+        }
+
+        .my-account-counter {
+            width: 100%;
+            height: 30px;
+            margin-bottom: 30px;
+            line-height: 50px;
+        }
+
+        .my-account-counter span {
+            font-weight: bold;
+            font-size: 16px;
+            margin-right: 40px;
+        }
+
+        .my-account-nav{
+            text-align: center;
+        }
+
+        .my-account-nav a {
+            margin: 0 20px;
+        }
+
+        .my-account i {
+            margin: 0 5px;
+        }
+
+    </style>
+{% endblock %}
+{% block main_list %}
+    <div class="my-account">
+        <div class="my-account-header">
+            <div class="my-account-avatar">
+                <img src="{% static '/images/avatar/girl.jpg' %}" alt="">
+            </div>
+            <div class="my-account-msg">
+                <div class="account-setting">
+                    <span class="account-nickname">jjc</span>
+                    <span class="account-edit">编辑主页</span>
+                    <i class="glyphicon glyphicon-cog"></i>
+                </div>
+                <div class="my-account-counter">
+                    <span>0 帖子</span>
+                    <span>0 粉丝</span>
+                    <span>0 正在关注</span>
+                </div>
+                <div class="account-intro">
+                    <p>jjcn</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="my-account-nav">
+            <a><i class="glyphicon glyphicon-th"></i>帖子</a>
+            <a><i class="glyphicon glyphicon-facetime-video"></i>IGTV</a>
+            <a><i class="glyphicon glyphicon-star-empty"></i>收藏夹</a>
+            <a><i class="glyphicon glyphicon-heart-empty"></i>已标记</a>
+        </div>
+        <div class="my-account-body">
+            <div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'link_block/icon.html' %}
+    {% include 'link_block/links.html'%}
+    {% block register_header %}
+    {% endblock %}
+    <style>
+        body {
+            background: #FAFAFA;
+        }
+
+        article {
+            width: 930px;
+            height: 930px;
+            margin: 60px auto;
+
+            position: relative;
+        }
+
+        .dynamic-img {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+        }
+
+        .one-window {
+            position: absolute;
+            right: 64px;
+            top: 100px;
+        }
+
+        .register-block {
+            position: absolute;
+            width: 348px;
+            top: 10px;
+            right: 50px;
+            border: 1px solid #E6E6E6;
+            background: white;
+        }
+
+        .register-block h2 {
+            text-align: center;
+        }
+
+        .login-in {
+            position: absolute;
+            width: 348px;
+            height: 60px;
+            top: 420px;
+            right: 50px;
+            border: 1px solid #E6E6E6;
+            background: white;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        .login-in a {
+            text-decoration: none;
+            color: #008CBA;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <div class="dynamic-img">
+            <img src="{% static '/images/login/phone.png' %}" alt="">
+            <div class="one-window">
+                <img src="{% static '/images/login/f0c687aa6ec2.jpg' %}" alt="">
+            </div>
+        </div>
+        <div class="register-block">
+            {% block register %}
+            {% endblock %}
+        </div>
+        <div class="login-in">
+            <span>有账户了？</span><a href="">请登录</a>
+        </div>
+    </article>
+</body>
+{% block register_js %}
+{% endblock %}
+</html>

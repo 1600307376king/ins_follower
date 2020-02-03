@@ -1,0 +1,138 @@
+{% extends 'register_base.html' %}
+{% block register_header %}
+    <style>
+        .re-i {
+            position: relative;
+            margin: 0 40px 6px;
+        }
+
+        .re-i input {
+            width: 168px;
+            height: 30px;
+            background: #FAFAFA;
+            border-radius: 3px;
+            border: 1px solid #EFEFEF;
+            padding-left: 10px;
+        }
+
+        .re-i button {
+            width: 80px;
+            height: 34px;
+            border: none;
+            border-radius: 3px;
+            background: #008CBA;
+            color: white;
+        }
+
+        .re-b {
+            position: relative;
+            margin: 0 40px 6px;
+        }
+
+        .re-b button {
+            width: 268px;
+            height: 30px;
+            border: none;
+            border-radius: 5px;
+            background: #008CBA;
+            color: white;
+        }
+
+        .redTip {
+            color: orangered;
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            display: none;
+        }
+
+    </style>
+{% endblock %}
+{% block register %}
+    <h2>INS</h2>
+    <div class="register-logo"></div>
+    {% csrf_token %}
+    <div class="re-i">
+        <input type="text" placeholder="请输入邮箱验证码" name="code">
+        <button onclick="resend()">重新发送</button>
+        <div id="accountTip" class="redTip">请输入6位验证码</div>
+    </div>
+    <div class="re-b">
+        <button onclick="sendCode()">确定</button>
+    </div>
+{% endblock %}
+{% block register_js %}
+    <script type="text/javascript">
+        let rl= window.location.href;
+        let phMail = rl.split("/")[4];
+
+        $(document).ready(function () {
+            let inputObj = $("input");
+            inputObj.focus(function () {
+                
+            });
+            inputObj.blur(function () {
+                let authCodeReg = new RegExp("^[A-Z0-9]{6}$");
+                let authCode = document.getElementsByName("code")[0].value;
+                if(!authCodeReg.test(authCode) && authCode.length > 0){
+                    document.getElementById("accountTip").style.display = "inline-block";
+                }else {
+                    document.getElementById("accountTip").style.display = "none";
+                }
+            })
+        });
+
+        function sendCode() {
+            let authCodeReg = new RegExp("^[A-Z0-9]{6}$");
+            let authCode = document.getElementsByName("code")[0].value;
+            if(authCodeReg.test(authCode)){
+                $.ajax({
+                    type: 'POST',
+                    url: "/auth/" + phMail + "/",
+                    data: JSON.stringify({
+                        'first_input': phMail,
+                        "auth_code": authCode,
+                    }),
+                    dataType: 'json',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                    success: function (response) {
+                        if(response.msg === '验证成功'){
+                            window.location.href = "/"
+                        }else{
+                            console.log("请求失败");
+                        }
+                        {#window.location.href = "/auth/"#}
+                    }
+                })
+            }
+
+        }
+        
+        function resend() {
+            $.ajax({
+                type: 'POST',
+                url: "/auth/" + phMail + "/",
+                data: JSON.stringify({
+                    'first_input': phMail,
+                    "type": 'resend',
+                }),
+                dataType: 'json',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (response) {
+                    if(response.msg === '发送成功'){
+                        window.location.href = "/"
+                    }else{
+                        console.log("请求失败");
+                    }
+                    {#window.location.href = "/auth/"#}
+                }
+            })
+        }
+    </script>
+{% endblock %}

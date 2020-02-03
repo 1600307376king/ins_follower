@@ -1,0 +1,219 @@
+{% extends 'register_base.html' %}
+{% block register_header %}
+    <style>
+        .re-i {
+            position: relative;
+            margin: 0 40px 6px;
+        }
+
+        .re-i input {
+            width: 258px;
+            height: 30px;
+            background: #FAFAFA;
+            border-radius: 3px;
+            border: 1px solid #EFEFEF;
+            padding-left: 10px;
+        }
+
+        .re-i button {
+            width: 268px;
+            height: 30px;
+            border: none;
+            border-radius: 5px;
+            background: #008CBA;
+            color: white;
+        }
+
+        .policy-condition {
+            margin: 10px 60px;
+            padding-bottom: 20px;
+            font-size: 12px;
+            color: #999999;
+        }
+
+        .policy-condition a {
+            color: grey;
+            font-size: 14px;
+        }
+
+        .redTip {
+            color: orangered;
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+
+            display: none;
+
+        }
+
+    </style>
+{% endblock %}
+{% block register %}
+    <h2>INS</h2>
+    <div class="register-logo"></div>
+    {% csrf_token %}
+    <div class="re-i">
+        <input type="text" placeholder="手机号或邮箱" name="first_input">
+        <div id="phMailTip" class="redTip">格式输入错误</div>
+    </div>
+    <div class="re-i">
+        <input type="text" placeholder="账号" name="account">
+        <div id="accountTip" class="redTip">请输入6-20位包含数字和字母的组合</div>
+    </div>
+    <div class="re-i">
+        <input type="text" placeholder="昵称" name="nickname">
+    </div>
+    <div class="re-i">
+        <input type="password" placeholder="密码" name="password">
+        <div id="pwdTip" class="redTip">请输入至少6-20位包含数字和字母的组合</div>
+    </div>
+    <div class="re-i">
+        <input type="password" placeholder="再次输入密码" name="confirm_password">
+        <div id="confirmTip" class="redTip">两次密码输入不一致</div>
+    </div>
+    <div class="re-i">
+        <button id="goRegister" onclick="auth()">注册</button>
+    </div>
+
+    <div class="policy-condition">
+        <p>注册即表示你同意我们的<a>条款</a>、<a>数据使用政策</a>和<a>Cookie 政策</a>。</p>
+    </div>
+{% endblock %}
+{% block register_js %}
+    <script type="text/javascript">
+
+        function auth() {
+            let first_inp = document.getElementsByName("first_input")[0].value;
+            let account = document.getElementsByName("account")[0].value;
+            let nickname = document.getElementsByName("nickname")[0].value;
+            let password = document.getElementsByName("password")[0].value;
+
+            if(isAllFormatTrue === true){
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/register/',
+                    data: JSON.stringify({
+                        'first_input': first_inp,
+                        "account": account,
+                        "nickname": nickname,
+                        "password": password
+                    }),
+                    dataType: 'json',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                    success: function (response) {
+                        if(response.msg === '邮件发送成功'){
+                            window.location.href = "/auth/" + first_inp + "/";
+                        }else{
+                            console.log("请求失败");
+                        }
+                        {#window.location.href = "/auth/"#}
+                    }
+                })
+            }
+
+        }
+    </script>
+    <script type="text/javascript">
+        // 输入格式是否正确变量
+        let isAllFormatTrue = false;
+
+        $(document).ready(function () {
+            let inp = $("input");
+            inp.focus(function () {
+
+            });
+            inp.blur(function () {
+                let first_inp = document.getElementsByName("first_input")[0].value;
+                let account = document.getElementsByName("account")[0].value;
+                let nickname = document.getElementsByName("nickname")[0].value;
+                let password = document.getElementsByName("password")[0].value;
+                let confirm = document.getElementsByName("confirm_password")[0].value;
+
+                let ph = new RegExp("^[0-9a-zA-Z_]{0,19}@[0-9a-zA-Z]{1,13}\\.[com,cn,net]{1,3}$");
+                let mail = new RegExp("^(13[0-9]|14[5-9]|15[0-35-9]|166|17[0-8]|18[0-9]|19[89])[0-9]{8}$");
+                let ac = new RegExp("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{5,20}$");
+                if(!ph.test(first_inp) && !mail.test(first_inp) && first_inp.length > 0){
+                    document.getElementById("phMailTip").innerText = '格式输入错误';
+                    document.getElementById("phMailTip").style.display = "inline-block";
+                    isAllFormatTrue = false;
+                }else if((!ac.test(account) || account.length < 6) && account.length > 0){
+                    document.getElementById("phMailTip").style.display = "none";
+                    document.getElementById("accountTip").style.display = "inline-block";
+                    isAllFormatTrue = false;
+                }else if((!ac.test(password) || password.length < 6) && password.length > 0){
+                    document.getElementById("phMailTip").style.display = "none";
+                    document.getElementById("accountTip").style.display = "none";
+                    document.getElementById("pwdTip").style.display = "inline-block";
+                    isAllFormatTrue = false;
+                }else if(password !== confirm && password.length > 0 && confirm.length > 0){
+                    document.getElementById("phMailTip").style.display = "none";
+                    document.getElementById("accountTip").style.display = "none";
+                    document.getElementById("pwdTip").style.display = "none";
+                    document.getElementById("confirmTip").style.display = "inline-block";
+                    isAllFormatTrue = false;
+                }else if(first_inp.length > 0 || account.length > 0 || password.length > 0){
+
+                    document.getElementById("phMailTip").style.display = "none";
+                    document.getElementById("accountTip").style.display = "none";
+                    document.getElementById("pwdTip").style.display = "none";
+                    document.getElementById("confirmTip").style.display = "none";
+
+                    check_input(first_inp, account, nickname, password);
+                    if(first_inp.length > 0 && account.length > 0 && password.length > 0 && confirm.length > 0){
+
+                        isAllFormatTrue = true;
+                    }
+                }else {
+                    document.getElementById("phMailTip").style.display = "none";
+                    document.getElementById("accountTip").style.display = "none";
+                    document.getElementById("pwdTip").style.display = "none";
+                    document.getElementById("confirmTip").style.display = "none";
+                }
+                {#check_input(first_inp, account, nickname, password);#}
+            });
+        });
+
+        function check_input(first_inp, account, nickname, password) {
+            $.ajax({
+                type: "POST",
+                url: "/tk/",
+                data: JSON.stringify({
+                    'first_input': first_inp,
+                    "account": account,
+                    "nickname": nickname,
+                    "password": password
+                }),
+                dataType: "json",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (response) {
+                    if (response.token) {
+                        let exp = new Date();
+                        exp.setTime(exp.getTime() + 48 * 60 * 60000); //过期时间48小时分钟
+                        document.cookie = "token=" + response.token + "; path=/; expires=" + exp.toGMTString();
+
+                    }
+                    {#window.location = '/';#}
+                    if(response.error_msg === '邮箱已注册'){
+                        document.getElementById("phMailTip").innerText = '邮箱已注册';
+                        document.getElementById("phMailTip").style.display = "inline-block";
+                        isAllFormatTrue = false;
+                    }else if(response.error_msg === '手机号码已注册'){
+                        document.getElementById("phMailTip").innerText = '手机号码已注册';
+                        document.getElementById("phMailTip").style.display = "inline-block";
+                        isAllFormatTrue = false;
+                    }
+                }
+
+
+            });
+        }
+
+    </script>
+{% endblock %}

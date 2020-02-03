@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+    <style>
+
+
+
+    </style>
+{% endblock %}
+{% block main_list %}
+    <div class="middle-list">
+            <div class="top-title">
+                推荐
+            </div>
+            <div class="users-box">
+                {% for user in recommend_list  %}
+                <div class="user">
+                    <div class="user-avatar">
+                        <img src="{% static user.avatar %}" alt="">
+                    </div>
+                    <div class="user-text">
+                        <div class="user-text-nickname">
+                            {{ user.nickname }}
+                        </div>
+                        <div class="user-signature">
+                            {{ user.resume }}
+                        </div>
+                        <div class="official-description">
+                            {{ user.city }}
+                        </div>
+                    </div>
+                    <div class="follower-button">
+                        <button class="fo">关注</button>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="clear"></div>
+            </div>
+        </div>
+{% endblock %}

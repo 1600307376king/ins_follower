@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+    <style>
+        .explore-list {
+            width: 100%;
+            min-height: 1200px;
+            max-width: 900px;
+            margin: 50px auto;
+            position: relative;
+
+        }
+
+        .explore-list p {
+            width: 100%;
+            color: #999999;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .explore-block {
+            width: 280px;
+            height: 280px;
+            margin: 10px;
+            float: left;
+            display: block;
+            background: #008CBA;
+            position: relative;
+        }
+
+        .explore-block img {
+            width: 280px;
+            height: 280px;
+
+        }
+
+        .many-img-icon i {
+            color: white;
+        }
+
+        .many-img-icon {
+            position: absolute;
+            right: 10px;
+            top:10px;
+        }
+
+        .pop-up-box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 60px;
+            background: #9D9D9D;
+            background:rgba(0,0,0,0.5);
+            z-index: 1000;
+            overflow-y: scroll;
+        }
+
+        .pop-up-inner {
+            left: 50%;
+            width: 900px;
+            height: 640px;
+            margin-left: -450px;
+            top: 50%;
+            bottom: 200px;
+            margin-top: -270px;
+            position: absolute;
+            z-index: 1000;
+            opacity: 1;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .pop-up-images {
+            float: left;
+            width: 540px;
+            height: 540px;
+            display: block;
+            border: none;
+        }
+
+        .pop-up-images img {
+            width: 540px;
+            height: 540px;
+
+        }
+
+        .pop-up-msg {
+            width: 358px;
+            height: 540px;
+            float: left;
+            background: white;
+            display: block;
+        }
+
+        .send-user {
+            font-weight: 900;
+            height: 60px;
+            line-height: 60px;
+            border-bottom: 1px solid #EFEFEF;
+        }
+
+        .send-user img {
+            width: 40px;
+            height: 40px;
+            margin: 10px;
+            border-radius: 50%;
+        }
+
+        .focus-btn {
+            color: #008CBA;
+        }
+
+        .user-options {
+            margin-right: 10px;
+            float: right;
+        }
+
+        .user-recommend-list {
+            width: 100%;
+            height: 310px;
+            border-bottom: 1px solid #EFEFEF;
+        }
+
+        .user-recommend-box {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .sender-msg {
+            width: 100%;
+            min-height: 60px;
+        }
+
+        .sender-msg img {
+            width: 40px;
+            height: 40px;
+            margin: 10px;
+            border-radius: 50%;
+            float: left;
+
+        }
+
+        .msg-block {
+            margin: 10px 20px 10px 65px;
+        }
+
+        .counter-msg {
+            margin-top: 10px;
+        }
+
+        .counter-msg span {
+            margin-right: 10px;
+        }
+
+        .recommend-li img {
+            width: 40px;
+            height: 40px;
+            margin: 10px;
+            border-radius: 50%;
+            float: left;
+        }
+
+        .hide-rec-list {
+            color: #9D9D9D;
+        }
+
+        .rec-options {
+            border-bottom: 1px solid #EFEFEF;
+        }
+
+        .rec-option-icon {
+            font-size: 24px;
+            margin: 10px 10px 0 10px;
+        }
+
+        .my-like-counter {
+            font-weight: bold;
+            margin-bottom: 5px;
+            margin-left: 20px;
+        }
+
+        .my-send-date {
+            color: #9D9D9D;
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
+
+        .exp-add-comment textarea{
+            width: 70%;
+            margin: 20px 0 20px 20px;
+            height: 20px;
+
+            outline: none;
+            line-height: 20px;
+            resize: none;
+            border: none;
+            overflow-y: hidden;
+            float: left;
+        }
+
+        .exp-add-comment button {
+            margin: 20px 0 20px 20px;
+            background: white;
+            color: #008CBA;
+            border: none;
+
+        }
+
+        .close-pop-up {
+            position: fixed;
+            right: 30px;
+            top: 10px;
+            z-index: 2000;
+            font-size: 24px;
+        }
+    </style>
+{% endblock %}
+{% block main_list %}
+    <div class="explore-list">
+        <p>探索</p>
+        <div class="explore-block">
+            <img src="{% static 'images/user/jjc/7fd8564f457817f4b47a329b1fe44624.jpg' %}" alt="">
+            <div class="many-img-icon">
+                <i class="glyphicon glyphicon-book"></i>
+            </div>
+        </div>
+        <div class="explore-block">
+
+        </div>
+        <div class="explore-block">
+
+        </div>
+        <div class="explore-block">
+
+        </div>
+    </div>
+    <div class="pop-up-box">
+        <div class="pop-up-inner">
+            <div class="pop-up-images">
+                <img src="{% static '/images/user/jjc/7fd8564f457817f4b47a329b1fe44624.jpg' %}" alt="">
+            </div>
+            <div class="pop-up-msg">
+                <div class="send-user">
+                    <img src="{% static 'images/avatar/girl.jpg' %}" alt="">
+                    <span class="send-user-name">jjc</span>
+                    <span>·</span>
+                    <span class="focus-btn">关注</span>
+                    <span class="user-options">···</span>
+                </div>
+                <div class="user-recommend-list">
+                    <ul class="user-recommend-box">
+{#                        <img src="{% static 'images/avatar/girl.jpg' %}" alt="">#}
+                        <div class="sender-msg">
+                            <img src="{% static 'images/user/jjc/7fd8564f457817f4b47a329b1fe44624.jpg' %}" alt="">
+                            <div class="msg-block">
+                                <span>jjc</span>
+                                <span>I love when Lulu visits me at rehearsals.... #rehearsalbelike ✨🤍 5 DAYS!!!!</span>
+                                <br/>
+                                <div class="counter-msg">
+                                    <span>1 天</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <li class="recommend-li">
+                            <img src="{% static 'images/user/jjc/7fd8564f457817f4b47a329b1fe44624.jpg' %}" alt="">
+                            <div class="msg-block">
+                                <span>jjc</span>
+                                <span>I love when Lulu visits me at rehearsals.... #rehearsalbelike ✨🤍 5 DAYS!!!!</span>
+
+                                <div class="counter-msg">
+                                    <span>1 天</span>
+                                    <span>200 次赞</span>
+                                    <span>回复</span>
+                                </div>
+                                <div class="hide-rec-list">
+                                    <span>---</span>
+                                    <span>查看回复（8）</span>
+                                </div>
+
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="rec-options">
+                    <div class="rec-option-icon">
+                        <i class="glyphicon glyphicon-heart-empty"></i>
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <i class="glyphicon glyphicon-share"></i>
+                        <i class="glyphicon glyphicon-star-empty" style="float: right"></i>
+                    </div>
+                    <div class="my-like-counter">
+                        <span>15343 次赞</span>
+                    </div>
+                    <div class="my-send-date">
+                        <span>2 天前</span>
+                    </div>
+                </div>
+                <div class="exp-add-comment">
+                    <textarea id="addContent" placeholder="添加评论..." maxlength="1000" onchange="lineFeed()"></textarea>
+                    <button class="add-comment-button">发布</button>
+                </div>
+            </div>
+        </div>
+        <div class="close-pop-up">
+            <i class="glyphicon glyphicon-remove-sign"></i>
+        </div>
+    </div>
+
+{% endblock %}
