@@ -1,9 +1,23 @@
-{% extends 'register_base.html' %}
+{% extends 'register/register_base.html' %}
 {% block register_header %}
     <style>
+        p {
+            text-align: center;
+            margin: 0 40px 20px;
+        }
+
+        .register-block {
+            position: absolute;
+            width: 348px;
+            top: 10px;
+            right: 50px;
+            border: 1px solid #E6E6E6;
+            background: white;
+        }
+
         .re-i {
             position: relative;
-            margin: 0 40px 6px;
+            margin: 0 40px 20px;
         }
 
         .re-i input {
@@ -15,18 +29,20 @@
             padding-left: 10px;
         }
 
-        .re-i button {
+        #resend {
             width: 80px;
             height: 34px;
             border: none;
             border-radius: 3px;
-            background: #008CBA;
-            color: white;
+            background: white;
+            color: #008CBA;
+            font-weight: bold;
+            outline: none;
         }
 
         .re-b {
             position: relative;
-            margin: 0 40px 6px;
+            margin: 0 40px 30px;
         }
 
         .re-b button {
@@ -49,20 +65,43 @@
     </style>
 {% endblock %}
 {% block register %}
-    <h2>INS</h2>
-    <div class="register-logo"></div>
-    {% csrf_token %}
-    <div class="re-i">
-        <input type="text" placeholder="请输入邮箱验证码" name="code">
-        <button onclick="resend()">重新发送</button>
-        <div id="accountTip" class="redTip">请输入6位验证码</div>
-    </div>
-    <div class="re-b">
-        <button onclick="sendCode()">确定</button>
+    <div class="register-block">
+        <h2>INS</h2>
+        <p>邮箱验证码已发送</p>
+        <div class="register-logo"></div>
+
+        {% csrf_token %}
+        <div class="re-i">
+            <input type="text" placeholder="请输入邮箱验证码" name="code">
+            <input type="button" id="resend" onclick="resend()" value="重新发送">
+            <div id="accountTip" class="redTip">请输入6位验证码</div>
+        </div>
+        <div class="re-b">
+            <button type="button" onclick="sendCode()">确定</button>
+        </div>
     </div>
 {% endblock %}
 {% block register_js %}
     <script type="text/javascript">
+        function send_six_code(obj, time) {
+
+            obj.value = time + 's';
+            setTimeout(function () {
+                var x = setInterval(function () {
+                    time = time - 1;
+                    obj.value = time + 's';
+
+                    if(time===0){
+                        clearInterval(x);
+                        obj.value = '重新发送';
+                        obj.disabled = false;
+                    }
+                }, 1000);
+            })
+        }
+    </script>
+    <script type="text/javascript">
+
         let rl= window.location.href;
         let phMail = rl.split("/")[4];
 
@@ -101,10 +140,14 @@
                     success: function (response) {
                         if(response.msg === '验证成功'){
                             window.location.href = "/"
-                        }else{
-                            console.log("请求失败");
+                        }else if(response.msg === '验证码错误'){
+                            document.getElementById("accountTip").style.display = "inline-block";
+                            document.getElementById("accountTip").innerText = "验证码错误"
                         }
-                        {#window.location.href = "/auth/"#}
+                        else{
+                            document.getElementById("accountTip").style.display = "inline-block";
+                            document.getElementById("accountTip").innerText = "请求失败";
+                        }
                     }
                 })
             }
@@ -112,6 +155,9 @@
         }
         
         function resend() {
+            let obj = document.getElementById("resend");
+            obj.disabled = true;
+
             $.ajax({
                 type: 'POST',
                 url: "/auth/" + phMail + "/",
@@ -125,10 +171,12 @@
                     'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
                 },
                 success: function (response) {
-                    if(response.msg === '发送成功'){
-                        window.location.href = "/"
+                    if(response.msg === '邮件已发送'){
+                        send_six_code(obj, 60);
                     }else{
-                        console.log("请求失败");
+                        document.getElementById("resend").value = "重新发送";
+                        document.getElementById("accountTip").style.display = "inline-block";
+                        document.getElementById("accountTip").innerText = "发送失败";
                     }
                     {#window.location.href = "/auth/"#}
                 }

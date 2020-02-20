@@ -3,29 +3,42 @@
 # @Time    : 2020/2/2 15:00
 # @Author  : HelloWorld
 # @File    : check_login_register.py
-from follower.models import User
+"""
+this module check the input format
+"""
 import re
+from follower.models import User
 
 
 def check_format(dic):
-    if dic['first_input']:
-        if re.search(r'^[0-9a-zA-Z_]{0,19}@[0-9a-zA-Z]{1,13}\.[com,cn,net]{1,3}$',
+    """
+
+    :param dic: request data
+    :return: check result
+    """
+    if dic.get('first_input') and dic.get('account') and dic.get('password'):
+        if re.search(r'^[0-9a-zA-Z_]{0,19}@[0-9a-zA-Z]{1,13}\.(com|cn|net)$',
                      dic['first_input']):
-            if User.objects.filter(mailbox=dic['first_input']).first():
-                return '邮箱已注册'
+            if User.objects.filter(email=dic['first_input']).first():
+                return 'The email has been registered'
 
-        if re.search(r'^(13[0-9]|14[5-9]|15[0-35-9]|166|17[0-8]|18[0-9]|19[89])[0-9]{8}$',
-                                     dic['first_input']):
+        elif re.search(r'^(13[0-9]|14[5-9]|15[0-35-9]|166|17[0-8]|18[0-9]|19[89])[0-9]{8}$',
+                       dic['first_input']):
             if User.objects.filter(phone_number=dic['first_input']).first():
-                return '手机号码已注册'
+                return 'The phone number has been registered'
+        else:
+            return 'input format Error'
 
-    if dic['account']:
-        ac = dic['account']
-        if (not re.search(r'^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{5,20}$', ac)) or (not 6 <= len(ac) <= 20):
-            return '账号格式不正确'
+        account = dic['account']
+        if (not re.search(r'^[0-9A-Za-z\u4e00-\u9fa5\x21-\x7e]{6,20}$', account)) \
+                or (not 6 <= len(account) <= 20):
+            return 'The account format error'
 
-    if dic['password']:
-        pw = dic['password']
-        if (not re.search(r'^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{5,20}$', pw)) or (not 6 <= len(pw) <= 20):
-            return '账号格式不正确'
-    return '输入正确'
+        password = dic['password']
+        if (not re.search(r'^[0-9A-Za-z\u4e00-\u9fa5\x21-\x7e]{6,20}$', password)) \
+                or (not 6 <= len(password) <= 20):
+            return 'Format input error'
+
+        return 'Format input correctly'
+    else:
+        return 'The input is empty'

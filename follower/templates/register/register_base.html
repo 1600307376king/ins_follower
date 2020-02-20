@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     {% include 'link_block/icon.html' %}
-    {% include 'link_block/links.html'%}
+    {% include 'link_block/links.html' %}
     {% block register_header %}
     {% endblock %}
     <style>
@@ -34,34 +34,10 @@
             top: 100px;
         }
 
-        .register-block {
-            position: absolute;
-            width: 348px;
-            top: 10px;
-            right: 50px;
-            border: 1px solid #E6E6E6;
-            background: white;
-        }
+
 
         .register-block h2 {
             text-align: center;
-        }
-
-        .login-in {
-            position: absolute;
-            width: 348px;
-            height: 60px;
-            top: 420px;
-            right: 50px;
-            border: 1px solid #E6E6E6;
-            background: white;
-            text-align: center;
-            line-height: 60px;
-        }
-
-        .login-in a {
-            text-decoration: none;
-            color: #008CBA;
         }
     </style>
 </head>
@@ -73,13 +49,8 @@
                 <img src="{% static '/images/login/f0c687aa6ec2.jpg' %}" alt="">
             </div>
         </div>
-        <div class="register-block">
-            {% block register %}
-            {% endblock %}
-        </div>
-        <div class="login-in">
-            <span>有账户了？</span><a href="">请登录</a>
-        </div>
+        {% block register %}
+        {% endblock %}
     </article>
 </body>
 {% block register_js %}
